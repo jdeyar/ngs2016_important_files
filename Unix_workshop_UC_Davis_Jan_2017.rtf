@@ -1,0 +1,296 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf760
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 HelveticaNeue;
+\f3\fnil\fcharset0 Menlo-BoldItalic;}
+{\colortbl;\red255\green255\blue255;\red38\green38\blue38;\red245\green245\blue245;\red255\green255\blue255;
+\red125\green151\blue255;\red0\green0\blue0;\red34\green79\blue188;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c20000\c20000\c20000;\cssrgb\c96863\c96863\c96863;\cssrgb\c100000\c100000\c100000;
+\cssrgb\c56078\c67059\c100000;\cssrgb\c0\c0\c0;\csgenericrgb\c13206\c30848\c73913;\csgenericrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww8900\viewh5100\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 find command\
+\
+find . command\'97> give all files and stuff in directory; find files\
+\
+find . -name \\*h\\* # find files with h in them \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 find . -name \\*h\\* -ls # list everything with paths and sizes and permissions\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+can do find . | less # allows you to scroll through it \
+\
+do find . -type d #give all directory structure\
+\
+clear #command to  clear terminal screen\
+\
+______\
+\
+renaming A LOT of files\
+\
+#tons of .fastq files but want to change them to .fq files\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+for i in *.fastq\
+do\
+   echo $i\
+done
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+# in loop\'97> \
+\
+#echo command print into screen; defines i to be fastq\
+\
+\
+# echo will print screen without running it\'97> shows you the outcome of file before running\
+\
+\
+#parallel in shell script\'97> run 8 at of a type simultaneously\'97> \
+\
+bash rename.sh \'97> can run script once define it \
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs32 \cf2 \cb4 \expnd0\expndtw0\kerning0
+If we want to get rid of the extension '.fastq', we can use the 'basename' command:\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs27\fsmilli13600 \cf2 \cb3 for i in *.fastq\
+do\
+   basename $i .fastq\
+done\
+\pard\pardeftab720\partightenfactor0
+
+\f2\fs32 \cf2 \cb4 Now, this doesn't actually rename the files - it just prints out the name, with the suffix '.fastq' removed. To rename the files, we need to capture the new name in a variable:\
+\
+\
+# rename all .fastq files to .fq\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs27\fsmilli13600 \cf2 \cb3 for i in *.fastq\
+do\
+   newname=$(basename $i .fastq).fq\
+   echo $newname\
+done
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+forloop\'97> run everything between do and done. doing this to all files to .fastq files\'97> takes value of i and replaces it with .fq\
+\
+i\'97> variable that we defined \
+\
+dollar sign\'97> how to express variable\
+\
+\
+\
+get rid of echo= run it for real\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+for i in *.fastq\
+do\
+   newname=$(basename $i .fastq).fq\
+   mv $i $newname\
+done\
+\
+\
+
+\fs24 #can run this for editing multiple files at a time, or in QC stuff, etc\
+\
+\
+#to run fore loop across multiple directories\
+\
+for input_file in $(find .. -name \\*.fastq); do echo trim $i -o $baseline $9.fastq).trim.fq; done\
+\
+#goes one directory up (this directory and the one this directory is in)\
+\
+#basename\'97> put everything in current directory from multiple directory\
+\
+#use backslash instead of forward forward shell\'97> interpret wildcard with find and not by bash \
+\
+\
+*.fa\
+\
+\
+\
+#for i in $(find .. -name \\*.fastq); do echo trim $i -o $i.trim; done)\
+\
+takes all fastq files from 2 files\'97> and put them as .trim files\
+\
+
+\f3\i\b #stack overflow= great for computational help\
+\
+
+\f1\i0\b0 #cut\
+\
+
+\fs27\fsmilli13600 echo hello, world | cut -c5-\
+\
+remove first 4 characters from file name\
+\
+cut -c1-20; takes first 20 characters of list\
+\
+for i in *.fastq; do j=$(echo $i | cut -c1-20 ); echo $j; done\
+\
+#every underscore is a field and it cuts the first 3 parts (fields) of name\
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 for i in *.fastq; do j=$(echo $i | cut -d -f1-3 ); echo $j; done
+\fs24 \cf2 \cb3 \
+\
+_________\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2 \cf0 \cb5 for i in *.fastq; do j=$(echo $i | cut -d_ -f1-3 ); k=$(echo $i | cut -d_ -f5); echo mv $i "$j-$k"; done\
+\
+\cb1 do this to change/ rename files in exact combination of what we want\'97> save a lot of time later\
+\
+\
+dont mess up files\'97> use echo or make raw data files read only\'97> help save data\'97> keep backup copy of data\'97> have it right for ALL files \
+\
+#make files in directory read only\
+\
+then unix will ask if you want if want to modify it; realize there is something wrong\
+\
+chmod -w *\
+\
+______________\
+\
+subset inside the file\'97> ex take 1000 reads from 100,000 seq reads\
+\
+subset to see if the command will run instead of wasting a lot of time for a command that may not work on a huge seq read file \
+\
+open . \
+#open directory you are in through finder\
+\
+\
+#run head on 100 files; then take file outputs in diff directory \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f1\fs22 \cf1 \cb7 \kerning1\expnd0\expndtw0 \CocoaLigature0 for i in *.fq; do echo "head -400 $i > subset/$i"; done\
+\
+\
+\cf8 \cb1 use quotes\'97> don\'92t want echo in there; it groups it\
+\
+#wc\
+\
+give word count\
+\
+\
+\
+#go into a file; get to specific line in a file ; want last line to come out from the first head command (the 18th line in example)\'97> run simultaneously \
+\cf1 \cb7 head -18 F3D9_S197_L001_R2_001.fq | tail -1\
+\
+\cf8 \cb1 #piping general rules\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\CocoaLigature1 > - send stdout to a file\
+< - take stdin from a file\
+| - take stdout from first command and make it stdin for second command\
+\
+head -18 <filename.fq> |tee out.txt | tail -1\
+\
+#save head file to output (out.txt) before running tail\
+\
+\
+running txt editor in terminal for HPC systems\'97> job scripts\
+\
+using pico\
+\
+put in job script; run bash ____.sh\
+\
+use set -e; stop running file at 1st error; otherwise still run with error \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs22 \cf7 \cb1 \kerning1\expnd0\expndtw0 \CocoaLigature0   GNU nano 2.0.6               File: subset.sh                          Modified  \cf1 \cb7 \
+\
+set -e\
+mkdir subset\
+for filename in *.fastq\
+do\
+        head -400 $filename > subset/$filenmae\
+done
+\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 history command \'97> shows exactly what you did \
+\
+ex history | tail -5\
+\
+show last 5 commands ran \
+\
+\
+______\
+\
+#pico trim. sh example\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs22 \cf1 \cb7 \kerning1\expnd0\expndtw0 \CocoaLigature0 for i in *.fastq\
+do\
+echo trim $i -o $(basename $i .fastq).fq\
+done
+\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+\
+\
+#what if want to select fq files and not run all of them\
+\
+
+\fs22 \cf1 \cb7 \kerning1\expnd0\expndtw0 \CocoaLigature0 for i in $*\
+do\
+echo trim $i -o $(basename $i .fastq).fq\
+done\
+\
+then run whats in the command line F3D0*.fq
+\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+\
+#if run script on pearl file or python file but run it in bash= problem\
+\
+#! /bin/bash\
+\
+***Need to specify what language you are in\
+\
+\
+if in python #! /usr/bin/env python\
+\
+	USES WHAT VERSION OF PYTHON IS IN SCRIPT\
+\
+\
+\
+________________________\
+\
+squeue \'97> check queue in status and job script\
+\
+condo list \
+\
+#will show all programs/softwares in directory\
+\
+\
+can put #SBATCH -D for directory working in \
+\
+-c CPU\
+\
+use watch (like top)\
+\
+\
+\
+set up environ with programs you install and only use for programs downloaded\
+\
+\
+scancel (job_id)\
+\
+#command to cancel jobs if made error writing job \
+}
